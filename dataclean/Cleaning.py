@@ -18,7 +18,7 @@ if __name__ == '__main__':
     df = df[df["house_orientation"] != "暂无数据"]
     df = df[df["with_elevator"] != "暂无数据"]
     df = df[df["year_of_property"] != "未知"]
-    # df = df[(df["household_style"] != "车位") & (df["household_style"] != "别墅")]
+    df = df[(df["household_style"] != "车位") & (df["household_style"] != "别墅")]
     # df = df[df["deal_time"].str.len() <= 10]
 
     # 打印清洗后的基本信息
