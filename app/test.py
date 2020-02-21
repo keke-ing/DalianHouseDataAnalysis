@@ -45,12 +45,14 @@ def map():
     fig.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 10})
     return fig
 
+
 def heatmap():
-    fig = px.density_mapbox(dalian, lat='lat', lon='lon', z='deal_totalPrice', radius=10,
+    fig = px.density_mapbox(dalian, lat='lat', lon='lon', z='deal_totalPrice', hover_data=["address", "deal_totalPrice"],
+                            radius=10,
                             mapbox_style="stamen-terrain")
     fig.update_layout(autosize=True,
                       hovermode='closest',
-                      mapbox_style="carto-positron",
+                      mapbox_style="stamen-watercolor",
                       mapbox=dict(
                           accesstoken=mapbox_access_token,
                           bearing=0,
@@ -62,7 +64,28 @@ def heatmap():
                           zoom=9,
                       ),
                       )
-    return  fig
+    fig.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 0})
+
+    return fig
+
+
+def allscatter():
+    fig = px.scatter(dalian, x="gross_area", y="deal_totalPrice", color="region",
+                     hover_data=["address", "deal_totalPrice", "deal_unitPrice"])
+
+    fig.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 0})
+
+    return fig
+
+
+def unitscatter():
+    fig = px.scatter(dalian, x="gross_area", y="deal_unitPrice", color="region",
+                     hover_data=["address", "deal_totalPrice", "deal_unitPrice"])
+
+    fig.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 0})
+
+    return fig
+
 
 def scatter():
     fig = px.scatter(dalian, x="gross_area", y="deal_totalPrice", color="deal_totalPrice", facet_col="region",
@@ -82,6 +105,22 @@ def housetype():
     return houseusefig
 
 
+def pie():
+    fig = px.pie(dalian, names='household_style')
+    fig.update_traces(textposition='inside', textinfo='percent+label')
+    fig.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 10})
+
+    return fig
+
+
+def piet():
+    fig = px.pie(dalian, names='house_decoration')
+    fig.update_traces(textposition='inside', textinfo='percent+label')
+    fig.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 0})
+
+    return fig
+
+
 app.layout = html.Div(
     # style=dict(backgroundColor=colors['background']),
     className="app_main_content",
@@ -90,7 +129,7 @@ app.layout = html.Div(
             className="banner",
             children=[
                 html.H3(
-                    children="DaLian链家二手房信息",
+                    children="DaLian链家二手房源信息",
                 ),
                 html.Img(src=app.get_asset_url("plotly_logo.png")),
             ],
@@ -124,6 +163,36 @@ app.layout = html.Div(
         ),
         html.Div(
             children=[
+                html.H6(children='大连二手房总价-面积散点图',
+                        style=dict(textAlign='center', color=colors['text']),
+                        ),
+                html.Div(
+                    children=dcc.Loading(
+                        children=dcc.Graph(
+                            figure=allscatter(),
+                        ),
+
+                    ),
+                ),
+            ]
+        ),
+        html.Div(
+            children=[
+                html.H6(children='大连二手房单价-面积散点图',
+                        style=dict(textAlign='center', color=colors['text']),
+                        ),
+                html.Div(
+                    children=dcc.Loading(
+                        children=dcc.Graph(
+                            figure=unitscatter(),
+                        ),
+
+                    ),
+                ),
+            ]
+        ),
+        html.Div(
+            children=[
                 html.H6(children='各区房屋面积-总价散点图',
                         style=dict(textAlign='center', color=colors['text']),
                         ),
@@ -139,7 +208,7 @@ app.layout = html.Div(
         ),
         html.Div(
             children=[
-                html.H6(children='大连各区二手房屋数量',
+                html.H6(children='大连各区二手房屋数量图',
                         style=dict(textAlign='center', color=colors['text']),
                         ),
                 html.Div(
@@ -154,7 +223,7 @@ app.layout = html.Div(
         ),
         html.Div(
             children=[
-                html.H6(children='大连各区二手房屋类型',
+                html.H6(children='大连各区二手房屋类型图',
                         style=dict(textAlign='center', color=colors['text']),
                         ),
                 html.Div(
@@ -167,6 +236,37 @@ app.layout = html.Div(
                 ),
             ]
         ),
+        html.Div(
+            children=[
+                html.H6(children='大连二手房房屋户型占比图',
+                        style=dict(textAlign='center', color=colors['text']),
+                        ),
+                html.Div(
+                    children=dcc.Loading(
+                        children=dcc.Graph(
+                            figure=pie(),
+                        ),
+
+                    ),
+                ),
+            ]
+        ),
+        html.Div(
+            children=[
+                html.H6(children='大连二手房房屋装修图',
+                        style=dict(textAlign='center', color=colors['text']),
+                        ),
+                html.Div(
+                    children=dcc.Loading(
+                        children=dcc.Graph(
+                            figure=piet(),
+                        ),
+
+                    ),
+                ),
+            ]
+        ),
+
     ],
 )
 
