@@ -7,7 +7,15 @@ import pandas as pd
 from sklearn.cluster import MiniBatchKMeans, KMeans
 from sklearn.metrics.pairwise import pairwise_distances_argmin
 
-
+"""
+init		time	inertia		homo	compl	v-meas	AMI	silhouette
+k-means++	1.82s	170209374	0.030	0.622	0.057	0.040	0.632
+k-means++	3.18s	106797320	0.051	0.578	0.094	0.065	0.518
+k-means++	4.26s	79229808	0.069	0.595	0.124	0.086	0.458
+random   	1.44s	170209801	0.030	0.622	0.057	0.040	0.632
+random   	2.53s	106798017	0.051	0.578	0.094	0.064	0.518
+random   	4.28s	79236992	0.068	0.594	0.122	0.084	0.462
+"""
 batch_size = 300
 df = pd.read_csv(
     r'/home/kekeing/Desktop/code/DateMining/data/lianjia_processed.csv', sep=',')

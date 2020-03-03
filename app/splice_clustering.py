@@ -28,7 +28,7 @@ if __name__ == '__main__':
     result_two = pd.merge(df_two, df, how='left',on=['deal_totalPrice', 'gross_area'])
     result_two.to_csv("../data/clustering_two.csv", index=False)
 
-    result_three = pd.merge(df_two, df, how='left',on=['deal_totalPrice', 'gross_area'])
+    result_three = pd.merge(df_three, df, how='left',on=['deal_totalPrice', 'gross_area'])
     result_three.to_csv("../data/clustering_three.csv", index=False)
 
 

@@ -47,9 +47,8 @@ def map():
 
 
 def heatmap():
-    fig = px.density_mapbox(dalian, lat='lat', lon='lon', z='deal_totalPrice', hover_data=["address", "deal_totalPrice"],
-                            radius=10,
-                            mapbox_style="stamen-terrain")
+    fig = px.density_mapbox(dalian, lat='lat', lon='lon', z='deal_totalPrice', hover_data=["xiaoqu","address", "deal_totalPrice","deal_unitPrice"],
+                            radius=10)
     fig.update_layout(autosize=True,
                       hovermode='closest',
                       mapbox_style="stamen-watercolor",
@@ -118,6 +117,82 @@ def piet():
     fig.update_traces(textposition='inside', textinfo='percent+label')
     fig.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 0})
 
+    return fig
+
+
+def cmap_one():
+    dalian_one = pd.read_csv(DATA_PATH.joinpath("clustering_one.csv"))
+
+    fig = px.density_mapbox(dalian_one, lat='lat', lon='lon', z='deal_totalPrice',
+                            hover_data=["xiaoqu", "address", "deal_totalPrice", "deal_unitPrice"],
+                            radius=10)
+    fig.update_layout(autosize=True,
+                      hovermode='closest',
+                      mapbox_style="open-street-map",
+                      mapbox=dict(
+                          accesstoken=mapbox_access_token,
+                          bearing=0,
+                          center=dict(
+                              lat=38.9146,
+                              lon=121.619
+                          ),
+                          pitch=0,
+                          zoom=9,
+                      ),
+                      )
+    fig.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 10})
+    return fig
+
+
+def cmap_two():
+    dalian_two = pd.read_csv(DATA_PATH.joinpath("clustering_two.csv"))
+
+    fig = px.density_mapbox(dalian_two, lat='lat', lon='lon', z='deal_totalPrice',
+                            hover_data=["xiaoqu", "address", "deal_totalPrice", "deal_unitPrice"],
+                            radius=10)
+    fig.update_layout(autosize=True,
+                      hovermode='closest',
+                      mapbox_style="open-street-map",
+                      mapbox=dict(
+                          accesstoken=mapbox_access_token,
+                          bearing=0,
+                          center=dict(
+                              lat=38.9146,
+                              lon=121.619
+                          ),
+                          pitch=0,
+                          zoom=9,
+                      ),
+                      )
+
+
+    fig.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 10})
+    return fig
+
+
+def cmap_three():
+    dalian_three = pd.read_csv(DATA_PATH.joinpath("clustering_three.csv"))
+
+    fig = px.density_mapbox(dalian_three, lat='lat', lon='lon', z='deal_totalPrice',
+                            hover_data=["xiaoqu", "address", "deal_totalPrice", "deal_unitPrice"],
+                            radius=10)
+    fig.update_layout(autosize=True,
+                      hovermode='closest',
+                      mapbox_style="open-street-map",
+                      mapbox=dict(
+                          accesstoken=mapbox_access_token,
+                          bearing=0,
+                          center=dict(
+                              lat=38.9146,
+                              lon=121.619
+                          ),
+                          pitch=0,
+                          zoom=9,
+                      ),
+                      )
+
+
+    fig.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 10})
     return fig
 
 
@@ -253,13 +328,57 @@ app.layout = html.Div(
         ),
         html.Div(
             children=[
-                html.H6(children='大连二手房房屋装修图',
+                html.H6(children='大连二手房房屋户型占比图',
                         style=dict(textAlign='center', color=colors['text']),
                         ),
                 html.Div(
                     children=dcc.Loading(
                         children=dcc.Graph(
                             figure=piet(),
+                        ),
+                    ),
+                ),
+            ]
+        ),
+        html.Div(
+            children=[
+                html.H6(children='大连二手房屋聚类一',
+                        style=dict(textAlign='center', color=colors['text']),
+                        ),
+                html.Div(
+                    children=dcc.Loading(
+                        children=dcc.Graph(
+                            figure=cmap_one(),
+                        ),
+
+                    ),
+                ),
+            ]
+        ),
+        html.Div(
+            children=[
+                html.H6(children='大连二手房屋聚类二',
+                        style=dict(textAlign='center', color=colors['text']),
+                        ),
+                html.Div(
+                    children=dcc.Loading(
+                        children=dcc.Graph(
+                            figure=cmap_two(),
+                        ),
+
+                    ),
+                ),
+            ]
+        ),
+        html.Div(
+            children=[
+                html.H6(children='大连二手房屋聚类三',
+                        style=dict(textAlign='center', color=colors['text']),
+                        ),
+                html.Div(
+                    children=dcc.Loading(
+                        children=dcc.Graph(
+                            figure=cmap_three(),
                         ),
 
                     ),
