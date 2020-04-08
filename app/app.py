@@ -4,6 +4,7 @@ import dash_core_components as dcc
 import dash_html_components as html
 import pathlib
 import plotly.express as px
+import plotly.graph_objects as go
 
 PATH = pathlib.Path(__file__).parent
 
@@ -47,7 +48,8 @@ def map():
 
 
 def heatmap():
-    fig = px.density_mapbox(dalian, lat='lat', lon='lon', z='deal_totalPrice', hover_data=["xiaoqu","address", "deal_totalPrice","deal_unitPrice"],
+    fig = px.density_mapbox(dalian, lat='lat', lon='lon', z='deal_totalPrice',
+                            hover_data=["xiaoqu", "address", "deal_totalPrice", "deal_unitPrice"],
                             radius=10)
     fig.update_layout(autosize=True,
                       hovermode='closest',
@@ -165,7 +167,6 @@ def cmap_two():
                       ),
                       )
 
-
     fig.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 10})
     return fig
 
@@ -191,8 +192,40 @@ def cmap_three():
                       ),
                       )
 
-
     fig.update_layout(margin={"r": 0, "t": 0, "l": 0, "b": 10})
+    return fig
+
+
+def table():
+    headerColor = 'grey'
+    rowEvenColor = 'lightgrey'
+    rowOddColor = 'lavender'
+
+    fig = go.Figure(data=[go.Table(
+        header=dict(
+            values=['<b>聚类方法</b>', '<b>times(s)</b>', '<b>Homogeneity</b>', '<b>Completeness</b>',
+                    '<b>Silhouette</b>'],
+            line_color='darkslategray',
+            fill_color=headerColor,
+            align=['left', 'center'],
+            font=dict(color='white', size=22)
+        ),
+        cells=dict(
+            values=[
+                ['<b>K-Means(kmean算法)</b>', '<b>K-Means(random算法)</b>', '<b>MiniBatchKMeans</b>', '<b>DBSCAN</b>'],
+                [3.18, 2.53, 0.25, 2.34],
+                [0.051, 0.051, 0.052, 0.016],
+                [0.578, 0.578, 0.578,  0.789],
+                [0.518, 0.518, 0.516,  0.099],
+            ],
+            line_color='darkslategray',
+            # 2-D list of colors for alternating rows
+            fill_color=[[rowOddColor, rowEvenColor, rowOddColor, rowEvenColor, rowOddColor] * 5],
+            align=['left', 'center'],
+            font=dict(color='darkslategray', size=20)
+        ))
+    ])
+
     return fig
 
 
@@ -216,11 +249,11 @@ app.layout = html.Div(
         html.Div(
             children=dcc.Loading(
                 children=dcc.Graph(
-                    id="flights_time_series",
                     figure=map(),
                 )
             ),
         ),
+        # html.Div(id='my-div'),
         html.Div(
             children=[
                 html.H6(children='大连二手房屋总价热力图',
@@ -384,6 +417,36 @@ app.layout = html.Div(
                     ),
                 ),
             ]
+        ),
+        html.Div(
+            children=[
+                html.H6(children='聚类效果评估',
+                        style=dict(textAlign='center', color=colors['text']),
+                        ),
+                html.Div(
+                    children=dcc.Loading(
+                        children=dcc.Graph(
+                            figure=table(),
+                        ),
+                    ),
+                ),
+            ]
+        ),
+        html.Div(
+            children=[
+                html.H6(children='Kmeans与Minkmean对比',
+                        style=dict(textAlign='center', color=colors['text']),
+                        ),
+                html.Img(src=app.get_asset_url("KmeansCMink.png")),
+            ],
+        ),
+        html.Div(
+            children=[
+                html.H6(children='dbscan效果图',
+                        style=dict(textAlign='center', color=colors['text']),
+                        ),
+                html.Img(src=app.get_asset_url("dbscan.png")),
+            ],
         ),
 
     ],

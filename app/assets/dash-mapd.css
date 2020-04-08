@@ -24,6 +24,11 @@ body {
     background-color: #fcfcfc;
 }
 
+.png {
+    display: flex;
+    align-items: center;
+}
+
 .banner h6 {
     display: inline-block;
     font-family: 'Helvetica Neue', Helvetica, Arial;
@@ -42,6 +47,10 @@ body {
     padding: 2rem 2rem 4rem 2rem;
 }
 
+.center{
+    display: inline-block;
+    text-align: center;
+}
 
 #dropdown-select-outer {
     display: flex;

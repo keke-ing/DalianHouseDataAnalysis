@@ -42,7 +42,7 @@ t_mini_batch = time.time() - t0
 # #############################################################################
 # Plot result
 
-fig = plt.figure(figsize=(8, 3))
+fig = plt.figure(figsize=(16, 5))
 fig.subplots_adjust(left=0.02, right=0.98, bottom=0.05, top=0.9)
 colors = ['#4EACC5', '#FF9C34', '#4E9A06']
 
@@ -56,7 +56,6 @@ mbk_means_cluster_centers = mbk.cluster_centers_[order]
 
 k_means_labels = pairwise_distances_argmin(da, k_means_cluster_centers)
 mbk_means_labels = pairwise_distances_argmin(da, mbk_means_cluster_centers)
-print(k_means_labels)
 # KMeans
 ax = fig.add_subplot(1, 3, 1)
 for k, col in zip(range(n_clusters), colors):
@@ -103,4 +102,4 @@ ax.set_title('Difference')
 ax.set_xticks(())
 ax.set_yticks(())
 
-plt.savefig("mygraph.png")
+plt.savefig("../data/KmeansCMink.png")
