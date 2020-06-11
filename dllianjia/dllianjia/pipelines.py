@@ -5,8 +5,8 @@
 # Don't forget to add your pipeline to the ITEM_PIPELINES setting
 # See: https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 
-import pymongo
-import dllianjia.settings
+# import pymongo
+# import dllianjia.settings
 
 class MongoPipeline(object):
     collection = 'lianjia_house'  # 数据库collection名称

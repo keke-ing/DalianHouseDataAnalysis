@@ -278,7 +278,7 @@ app.layout = html.Div(
                     children=dcc.Loading(
                         children=dcc.Graph(
                             figure=allscatter(),
-                        ),
+                        ),  
 
                     ),
                 ),
@@ -361,7 +361,7 @@ app.layout = html.Div(
         ),
         html.Div(
             children=[
-                html.H6(children='大连二手房房屋户型占比图',
+                html.H6(children='大连二手房房屋装修类型占比图',
                         style=dict(textAlign='center', color=colors['text']),
                         ),
                 html.Div(

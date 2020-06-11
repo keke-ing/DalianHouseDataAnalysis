@@ -6,7 +6,7 @@ import json
 from lxml import etree
 from scrapy import Request
 from dllianjia.items import HomelinkItem
-
+# from dllianjia.dllianjia.items import omelinkItem
 
 class LianjiaspiderSpider(scrapy.Spider):
     name = 'LianjiaSpider'
